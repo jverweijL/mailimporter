@@ -1,0 +1,3 @@
+Bundle-Name: mailimporter
+Bundle-SymbolicName: com.liferay.mail.mailimporter
+Bundle-Version: 1.0.0
