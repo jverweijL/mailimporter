@@ -49,6 +49,9 @@ public class MailImporter {
 	static String DDMTEMPLATEKEY = props.getProperty("com.liferay.mailimporter.ddmtemplatekey","BASIC-WEB-CONTENT");
 	static String CONTENTTEMPLATE = props.getProperty("com.liferay.mailimporter.contenttemplate","<root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"tzol\"><dynamic-content language-id=\"en_US\"><![CDATA[<p>$CONTENT$</p>]]></dynamic-content></dynamic-element></root>");
 	
+	static String ADDATTACHMENT = props.getProperty("com.liferay.mailimporter.addattachment","false");
+	static String ADDCONTENT = props.getProperty("com.liferay.mailimporter.addcontent","false");
+	
     
     public static void checkMail() {
 	      try {
@@ -75,8 +78,14 @@ public class MailImporter {
 		         _log.debug("To: " + msg.getAllRecipients()[0]);
 		         _log.debug("Sender: " + msg.getFrom()[0]);
 		         _log.debug("Content: " + msg.getContent().toString());
-		         addEmail(msg);
-		         addDocument(msg);
+		         
+		         
+		         if (Boolean.parseBoolean(ADDCONTENT)) {
+		        	 addEmail(msg);
+		         }
+	        	 if (Boolean.parseBoolean(ADDATTACHMENT)) {
+	        		 addDocument(msg);
+	        	 }
 		      }
 		      //Now close all the objects
 		      emailFolderObj.close(false);
