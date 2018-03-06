@@ -2,7 +2,7 @@
 Liferay DXP module for importing emails as webcontent items and attachments into Document & Media Library
 
 ## params you can set in portal-ext.properties
-com.liferay.mail.custom.mailimporter.cron.expression=0 */1 * * * ?
+com.liferay.mail.custom.mailimporter.cron.expression=0 */5 * * * ?
 com.liferay.mail.custom.mailimporter.mailhost=mail.yourserver.com  
 com.liferay.mail.custom.mailimporter.mailprotocol=pop3s  
 com.liferay.mail.custom.mailimporter.port=995  
