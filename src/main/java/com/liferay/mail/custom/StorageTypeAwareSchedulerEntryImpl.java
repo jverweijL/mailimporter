@@ -1,4 +1,4 @@
-package com.liferay.mail;
+package com.liferay.mail.custom;
 
 //import SchedulerEntryImpl;
 

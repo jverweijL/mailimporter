@@ -2,16 +2,17 @@
 Liferay DXP module for importing emails as webcontent items and attachments into Document & Media Library
 
 ## params you can set in portal-ext.properties
-com.liferay.mailimporter.mailhost=mail.yourserver.com  
-com.liferay.mailimporter.mailprotocol=pop3s  
-com.liferay.mailimporter.port=995  
-com.liferay.mailimporter.username=user@yourserver.com  
-com.liferay.mailimporter.password=prettygoodpassword  
-com.liferay.mailimporter.groupid=20143  
-com.liferay.mailimporter.companyid=20116  
-com.liferay.mailimporter.userid=20156  
-com.liferay.mailimporter.webcontentfolderid=0  
-com.liferay.mailimporter.ddmstructurekey=BASIC-WEB-CONTENT  
-com.liferay.mailimporter.ddmtemplatekey=BASIC-WEB-CONTENT  
-com.liferay.mailimporter.addattachment=true  
-com.liferay.mailimporter.addcontent=true  
+com.liferay.mail.custom.mailimporter.cron.expression=0 */1 * * * ?
+com.liferay.mail.custom.mailimporter.mailhost=mail.yourserver.com  
+com.liferay.mail.custom.mailimporter.mailprotocol=pop3s  
+com.liferay.mail.custom.mailimporter.port=995  
+com.liferay.mail.custom.mailimporter.username=user@yourserver.com  
+com.liferay.mail.custom.mailimporter.password=prettygoodpassword  
+com.liferay.mail.custom.mailimporter.groupid=20143  
+com.liferay.mail.custom.mailimporter.companyid=20116  
+com.liferay.mail.custom.mailimporter.userid=20156  
+com.liferay.mail.custom.mailimporter.webcontentfolderid=0  
+com.liferay.mail.custom.mailimporter.ddmstructurekey=BASIC-WEB-CONTENT  
+com.liferay.mail.custom.mailimporter.ddmtemplatekey=BASIC-WEB-CONTENT  
+com.liferay.mail.custom.mailimporter.addattachment=true  
+com.liferay.mail.custom.mailimporter.addcontent=true  

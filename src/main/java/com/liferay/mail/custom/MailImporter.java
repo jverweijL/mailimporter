@@ -1,4 +1,4 @@
-package com.liferay.mail;
+package com.liferay.mail.custom;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,35 +32,36 @@ import org.apache.commons.lang.StringUtils;
 public class MailImporter {
 	
 	private static final Log _log = LogFactoryUtil.getLog(MailImporter.class);
-	private static Properties props = PropsUtil.getProperties();	
+	private static Properties properties = PropsUtil.getProperties();	
 	
-	static String DEFAULT_MAILHOST = props.getProperty("com.liferay.mailimporter.mailhost", "");
-	static String DEFAULT_MAILPROTOCOL = props.getProperty("com.liferay.mailimporter.mailprotocol","pop3s");
-	static String DEFAULT_MAILPORT = props.getProperty("com.liferay.mailimporter.port","995");
-	static String USERNAME = props.getProperty("com.liferay.mailimporter.username","");
-	static String PASSWORD = props.getProperty("com.liferay.mailimporter.password","");
+	static String DEFAULT_MAILHOST = properties.getProperty("com.liferay.mail.custom.mailimporter.mailhost", "");
+	static String DEFAULT_MAILPROTOCOL = properties.getProperty("com.liferay.mail.custom.mailimporter.mailprotocol","pop3s");
+	static String DEFAULT_MAILPORT = properties.getProperty("com.liferay.mail.custom.mailimporter.port","995");
+	static String USERNAME = properties.getProperty("com.liferay.mail.custom.mailimporter.username","");
+	static String PASSWORD = properties.getProperty("com.liferay.mail.custom.mailimporter.password","");
 	
-	static String GROUPID = props.getProperty("com.liferay.mailimporter.groupid","");
-	static String COMPANYID = props.getProperty("com.liferay.mailimporter.companyid","");
-	static String USERID = props.getProperty("com.liferay.mailimporter.userid","");
-	static String WEBCONTENTFOLDERID = props.getProperty("com.liferay.mailimporter.webcontentfolderid","");
+	static String GROUPID = properties.getProperty("com.liferay.mail.custom.mailimporter.groupid","");
+	static String COMPANYID = properties.getProperty("com.liferay.mail.custom.mailimporter.companyid","");
+	static String USERID = properties.getProperty("com.liferay.mail.custom.mailimporter.userid","");
+	static String WEBCONTENTFOLDERID = properties.getProperty("com.liferay.mail.custom.mailimporter.webcontentfolderid","");
 	
-	static String DDMSTRUCTUREKEY = props.getProperty("com.liferay.mailimporter.ddmstructurekey","BASIC-WEB-CONTENT");
-	static String DDMTEMPLATEKEY = props.getProperty("com.liferay.mailimporter.ddmtemplatekey","BASIC-WEB-CONTENT");
-	static String CONTENTTEMPLATE = props.getProperty("com.liferay.mailimporter.contenttemplate","<root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"tzol\"><dynamic-content language-id=\"en_US\"><![CDATA[<p>$CONTENT$</p>]]></dynamic-content></dynamic-element></root>");
+	static String DDMSTRUCTUREKEY = properties.getProperty("com.liferay.mail.custom.mailimporter.ddmstructurekey","BASIC-WEB-CONTENT");
+	static String DDMTEMPLATEKEY = properties.getProperty("com.liferay.mail.custom.mailimporter.ddmtemplatekey","BASIC-WEB-CONTENT");
+	static String CONTENTTEMPLATE = properties.getProperty("com.liferay.mail.custom.mailimporter.contenttemplate","<root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"tzol\"><dynamic-content language-id=\"en_US\"><![CDATA[<p>$CONTENT$</p>]]></dynamic-content></dynamic-element></root>");
 	
-	static String ADDATTACHMENT = props.getProperty("com.liferay.mailimporter.addattachment","false");
-	static String ADDCONTENT = props.getProperty("com.liferay.mailimporter.addcontent","false");
+	static String ADDATTACHMENT = properties.getProperty("com.liferay.mail.custom.mailimporter.addattachment","false");
+	static String ADDCONTENT = properties.getProperty("com.liferay.mail.custom.mailimporter.addcontent","false");
 	
     
     public static void checkMail() {
 	      try {
+	    	  _log.debug("Check mail...");
 		      //Set property values
-		      Properties mailprops = new Properties();
-		      mailprops.put("mail.pop3.host", DEFAULT_MAILHOST);
-		      mailprops.put("mail.pop3.port", DEFAULT_MAILPORT);
-		      mailprops.put("mail.pop3.starttls.enable", "true");
-		      Session emailSessionObj = Session.getDefaultInstance(mailprops);  
+		      Properties mailproperties = new Properties();
+		      mailproperties.put("mail.pop3.host", DEFAULT_MAILHOST);
+		      mailproperties.put("mail.pop3.port", DEFAULT_MAILPORT);
+		      mailproperties.put("mail.pop3.starttls.enable", "true");
+		      Session emailSessionObj = Session.getDefaultInstance(mailproperties);  
 		      //Create POP3 store object and connect with the server
 		      Store storeObj = emailSessionObj.getStore(DEFAULT_MAILPROTOCOL);
 		      storeObj.connect(DEFAULT_MAILHOST, USERNAME, PASSWORD);

@@ -1,4 +1,4 @@
-package com.liferay.mail;
+package com.liferay.mail.custom;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -13,9 +13,11 @@ import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -24,11 +26,20 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(
-		immediate = true, property = {"cron.expression=0 */5 * * * ?"},
+		immediate = true, 
+		//property = {"com.liferay.mail.custom.mailimporter.cron.expression=0 */5 * * * ?"},
 		service = FetchMailMessageListener.class
 		)
 
 public class FetchMailMessageListener extends BaseSchedulerEntryMessageListener {
+
+	private static final Log _log = LogFactoryUtil.getLog(MailImporter.class);
+	private static Properties properties = PropsUtil.getProperties();	
+	
+	private volatile boolean _initialized;
+	private TriggerFactory _triggerFactory;
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
 
 	/**
 	   * doReceive: This is where the magic happens, this is where you want to do the work for
@@ -52,12 +63,11 @@ public class FetchMailMessageListener extends BaseSchedulerEntryMessageListener 
 	   */
 	  @Activate
 	  @Modified
-	  protected void activate(Map<String,Object> properties) throws SchedulerException {
+	  protected void activate(Map<String,Object> props) throws SchedulerException {
 
 	    // extract the cron expression from the properties
-	    //String cronExpression = GetterUtil.getString(properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
-	    String cronExpression = GetterUtil.getString(properties.get("cron.expression"));
-	    System.out.println("Scheduling for " + cronExpression);
+	    String cronExpression = GetterUtil.getString(properties.getProperty("com.liferay.mail.custom.mailimporter.cron.expression","0 */5 * * * ?"));
+	    _log.info("Scheduling for " + cronExpression);
 
 	    // create a new trigger definition for the job.
 	    String listenerClass = getEventListenerClass();
@@ -146,12 +156,5 @@ public class FetchMailMessageListener extends BaseSchedulerEntryMessageListener 
 	    _schedulerEngineHelper = schedulerEngineHelper;
 	  }
 
-	  // the default cron expression is to run daily at midnight
-	  //private static final String _DEFAULT_CRON_EXPRESSION = "0 */5 * * * ?";
 
-	  private static final Log _log = LogFactoryUtil.getLog(FetchMailMessageListener.class);
-
-	  private volatile boolean _initialized;
-	  private TriggerFactory _triggerFactory;
-	  private SchedulerEngineHelper _schedulerEngineHelper;
 }
